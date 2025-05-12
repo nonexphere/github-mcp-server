@@ -355,9 +355,9 @@ func CreateRepository(getClient GetClientFn, t translations.TranslationHelperFun
 			mcp.WithBoolean("autoInit",
 				mcp.Description("Initialize with README"),
 			),
-			mcp.WithString("organization", // <<< ADDED
-				mcp.Description("Organization to create the repository in (optional, defaults to user account)"), // <<< ADDED
-			), // <<< ADDED
+			mcp.WithString("organization",
+				mcp.Description("Organization to create the repository in (optional, defaults to user account)"),
+			),
 		),
 		func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 			name, err := requiredParam[string](request, "name")
@@ -376,10 +376,10 @@ func CreateRepository(getClient GetClientFn, t translations.TranslationHelperFun
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
-			organization, err := OptionalParam[string](request, "organization") // <<< ADDED
-			if err != nil { // <<< ADDED
-				return mcp.NewToolResultError(err.Error()), nil // <<< ADDED
-			} // <<< ADDED
+			organization, err := OptionalParam[string](request, "organization")
+			if err != nil {
+				return mcp.NewToolResultError(err.Error()), nil
+			}
 
 			repo := &github.Repository{
 				Name:        github.Ptr(name),
@@ -392,7 +392,7 @@ func CreateRepository(getClient GetClientFn, t translations.TranslationHelperFun
 			if err != nil {
 				return nil, fmt.Errorf("failed to get GitHub client: %w", err)
 			}
-			createdRepo, resp, err := client.Repositories.Create(ctx, organization, repo) // <<< MODIFIED (organization)
+			createdRepo, resp, err := client.Repositories.Create(ctx, organization, repo)
 			if err != nil {
 				return nil, fmt.Errorf("failed to create repository: %w", err)
 			}
