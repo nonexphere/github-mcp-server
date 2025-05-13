@@ -10,8 +10,8 @@ on:
     - cron: "27 0 * * *"
   push:
     branches: ["main"]
-    # Publish semver tags as releases.
-    tags: ["v*.*.*"]
+    # Publish tags starting with v (including vMAJOR.MINOR.PATCH and vYEAR.MONTH.DAYeDAYVERSION)
+    tags: ["v*"]
   pull_request:
     branches: ["main"]
 
